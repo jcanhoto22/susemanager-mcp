@@ -26,6 +26,15 @@ Built with Go and the [mcp-golang](https://github.com/metoro-io/mcp-golang) libr
 - List all software channels, get channel details
 - List channel packages
 - View and change system channel subscriptions
+- Create and delete custom channels
+- Create and remove repositories
+- Associate repositories to channels
+
+### Content Lifecycle Management
+- List, create, and remove lifecycle projects
+- Build and promote projects through environments
+- Create environments within a project
+- Manage sources (attach, detach, list, replace)
 
 ### Resources
 - `suma://systems` — all systems
@@ -144,7 +153,9 @@ docker-compose up
 SERVER_TRANSPORT=http docker-compose up
 ```
 
-## MCP Tools
+## MCP Tools (43)
+
+### Auth (4)
 
 | Tool | Description |
 |---|---|
@@ -152,6 +163,11 @@ SERVER_TRANSPORT=http docker-compose up
 | `suse_get_version` | Get API version |
 | `suse_check_permissions` | Check user permissions |
 | `suse_disconnect` | Logout |
+
+### Systems (10)
+
+| Tool | Description |
+|---|---|
 | `suse_list_systems` | List all systems |
 | `suse_get_system_details` | Get system details by ID |
 | `suse_search_system_by_hostname` | Search systems by regex hostname |
@@ -162,19 +178,50 @@ SERVER_TRANSPORT=http docker-compose up
 | `suse_schedule_package_update` | Schedule package update |
 | `suse_schedule_highstate` | Schedule highstate |
 | `suse_apply_states` | Apply Salt states |
+
+### CVE / Security (4)
+
+| Tool | Description |
+|---|---|
 | `suse_list_cve_systems` | List systems by CVE status |
 | `suse_get_system_errata` | Get relevant errata |
 | `suse_schedule_errata` | Apply errata to systems |
 | `suse_get_unscheduled_errata` | Get unscheduled errata |
+
+### Channels (13)
+
+| Tool | Description |
+|---|---|
 | `suse_list_channels` | List software channels |
 | `suse_get_channel_details` | Get channel details |
 | `suse_list_channel_packages` | List channel packages |
 | `suse_list_system_channels` | List system channel subscriptions |
 | `suse_change_system_channels` | Change system channels |
-| `suse_create_repo` | Create a new repository |
 | `suse_create_channel` | Create a new software channel |
-| `suse_associate_repo_to_channel` | Associate a repository with a channel |
+| `suse_delete_channel` | Delete a custom software channel |
 | `suse_list_arches` | List available channel architectures |
+| `suse_create_repo` | Create a new repository |
+| `suse_remove_repo` | Remove a repository |
+| `suse_list_repos` | List all repositories |
+| `suse_list_channel_repos` | List repos associated with a channel |
+| `suse_associate_repo_to_channel` | Associate a repository with a channel |
+
+### Content Lifecycle (12)
+
+| Tool | Description |
+|---|---|
+| `suse_list_projects` | List all lifecycle projects |
+| `suse_lookup_project` | Get project details by label |
+| `suse_create_project` | Create a new lifecycle project |
+| `suse_remove_project` | Remove a lifecycle project |
+| `suse_build_project` | Build a lifecycle project |
+| `suse_promote_project` | Promote a project environment |
+| `suse_list_project_environments` | List project environments |
+| `suse_create_environment` | Create an environment in a project |
+| `suse_attach_source` | Attach a source (channel) to a project |
+| `suse_detach_source` | Detach a source from a project |
+| `suse_list_project_sources` | List sources attached to a project |
+| `suse_set_sources` | Replace all sources of a given type |
 
 ## Client Configuration
 
@@ -373,15 +420,16 @@ internal/
     client.go                   API client with session management
     system.go                   System API methods
     audit.go                    CVE/audit API methods
-    channel.go                  Channel API methods
-    errata.go                   Errata API methods
+    channel.go                   Channel API methods
+    content_lifecycle.go         Content Lifecycle API methods
+    errata.go                    Errata API methods
   config/
     config.go                   YAML + env config loader
   logger/
     logger.go                   slog logger setup
   mcp/
     server.go                   MCP server (stdio + HTTP)
-    tools.go                    24 tool registrations + handlers
+    tools.go                    43 tool registrations + handlers
     resources.go                3 resource registrations
     prompts.go                  3 prompt registrations
   models/
@@ -402,12 +450,13 @@ Makefile                        Build automation
 
 ## API Coverage
 
-### MVP (current)
+### Current (43 tools)
 
 - [x] Auth (4 tools)
 - [x] Systems (10 tools)
 - [x] CVE / Security (4 tools)
-- [x] Channels (6 tools)
+- [x] Channels (13 tools)
+- [x] Content Lifecycle (12 tools)
 - [x] Resources (3)
 - [x] Prompts (3)
 
