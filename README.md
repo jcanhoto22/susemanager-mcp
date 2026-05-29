@@ -4,6 +4,8 @@ MCP (Model Context Protocol) server for SUSE Manager / Uyuni integration. Enable
 
 Built with Go and the [mcp-golang](https://github.com/metoro-io/mcp-golang) library.
 
+> **Disclaimer:** This project is provided as-is. Not all API functions have been fully tested against a live SUSE Manager instance. Use at your own risk.
+
 ## Features
 
 ### Authentication
