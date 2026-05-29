@@ -1,0 +1,16 @@
+suse:
+  url: "https://suse-manager.example.com/rpc/api"
+  username: "admin"
+  password: "supersecret"
+  insecure_skip_verify: false
+  timeout: 60
+
+server:
+  port: 8080
+  log_level: "info"
+  transport: "stdio"
+  mcp_endpoint: "/mcp"
+
+logging:
+  format: "text"
+  level: "info"

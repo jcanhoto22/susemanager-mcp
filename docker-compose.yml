@@ -1,0 +1,30 @@
+version: "3.8"
+
+services:
+  mcp-susemanager:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: mcp-susemanager:latest
+    container_name: mcp-susemanager
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./config.yaml:/etc/suse-mcp/config.yaml:ro
+    environment:
+      - SUSE_URL=${SUSE_URL:-}
+      - SUSE_USERNAME=${SUSE_USERNAME:-}
+      - SUSE_PASSWORD=${SUSE_PASSWORD:-}
+      - SUSE_INSECURE=${SUSE_INSECURE:-false}
+      - SUSE_TIMEOUT=${SUSE_TIMEOUT:-60}
+      - SERVER_PORT=${SERVER_PORT:-8080}
+      - SERVER_LOG_LEVEL=${SERVER_LOG_LEVEL:-info}
+      - SERVER_TRANSPORT=${SERVER_TRANSPORT:-stdio}
+      - LOG_LEVEL=${LOG_LEVEL:-info}
+      - LOG_FORMAT=${LOG_FORMAT:-text}
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "pgrep mcp-susemanager || exit 1"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
